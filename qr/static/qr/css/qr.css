@@ -1,0 +1,9 @@
+body {
+  background-color: #c8cbcb;
+}
+
+@media (min-width: 768px){
+    .right-nav{
+        float: right;
+    }
+}

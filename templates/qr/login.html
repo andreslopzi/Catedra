@@ -1,0 +1,47 @@
+{% extends "qr/base.html" %}
+{% load staticfiles %}
+{% block title %}Iniciar sesion{% endblock %}
+
+{% block head %}
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/pretty-checkbox@3.0/dist/pretty-checkbox.min.css">
+{% endblock %}
+
+{% block body %}
+    <div style="margin-top: 6%;" class="container">
+        <div class="row"> <!--<img class="login-logo center-block" src="{% static "qr/img/..." %}">--></div>
+        <div class="row">
+            <div class="jumbotron  col-md-6 col-md-offset-3">
+                {%  if error_message %}
+                <div class="col-md-10 col-md-offset-1">
+                    <div style="text-align: center" class="alert alert-danger">
+                        <strong>Error!</strong>&nbsp;{{ error_message }}
+                    </div>
+                </div>
+                {% endif %}
+                <div class="col-md-10 col-md-offset-1">
+                    <form class="form-horizontal" method="post">
+                        {% csrf_token %}
+                        <div class="form-group">
+                            <div class="input input-group col-md-8 col-md-offset-2">
+                                <span class="input-group-addon"><i class="fa fa-user"></i></span>
+                                <input class="form-control" id="username" type="text" name="username" maxlength="30">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="input input-group col-md-8 col-md-offset-2">
+                                <span class="input-group-addon"><i class="fa fa-key"></i></span>
+                                <input class="form-control" id="password" type="password" name="password" maxlength="30">
+                            </div>
+                            <p style="font-size: xx-small; text-align: center" class="help-block">C5TyDLBLJehd8adm</p>
+                        </div>
+                        <div style="text-align: center; margin-bottom: 20px" class="checkbox">
+                            <label><input type="checkbox" name="remember">Recordarme</label>
+                        </div>
+                        <button class="btn btn-success center-block" type="submit">Iniciar sesion</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+{% endblock %}
