@@ -122,3 +122,4 @@ fabric.properties
 
 *.pyc
 .DS_Store
+qrvenv

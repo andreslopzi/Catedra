@@ -1,7 +1,9 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth import authenticate, login, logout
 from django.http import HttpResponseRedirect, HttpResponse
 from django.core.urlresolvers import reverse
+
+from .models import *
 
 # Create your views here.
 def signin(request):
@@ -32,4 +34,24 @@ def signout(request):
     return HttpResponseRedirect(reverse('qr:login'))
 
 def home(request):
-    return render(request, "qr/home.html")
+
+    if not request.user.is_authenticated():
+        return redirect('qr:login')
+
+    context = {
+        "cursos": Curso.objects.filter(monitores=request.user),
+    }
+
+    return render(request, "qr/home.html", context)
+
+def curso(request, id_curso):
+
+    curso = get_object_or_404(Curso, pk=id_curso)
+
+    if request.user not in curso.monitores.all():
+        return redirect('qr:home')
+
+    context = {
+        "curso" : curso
+    }
+    return render(request, "qr/curso.html", context)
