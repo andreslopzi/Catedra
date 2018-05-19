@@ -6,21 +6,25 @@
     <div class="container">
         <div class="row">
             <div class="col-md-6">
-               <h4>Cursos</h4>
-                <table>
-                    <thead>
-                        <tr>
-                            <th>Nombre</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {%  for curso in cursos %}
-                        <tr>
-                            <td><a href="{% url 'qr:curso' curso.id %}">{{ curso.nombre }}</a></td>
-                        </tr>
-                        {% endfor %}
-                    </tbody>
-                </table>
+               <h4>Cursos cátedra internacional</h4>
+                {% if not cursos %}
+                    <h3>No tienes cursos disponibles</h3>
+                {% else %}
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Nombre</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {%  for curso in cursos %}
+                            <tr>
+                                <td><a href="{% url 'qr:curso' curso.id %}">{{ curso.nombre }}</a></td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                {% endif %}
             </div>
             <div class="col-md-6"></div>
         </div>

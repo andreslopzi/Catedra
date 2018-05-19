@@ -1,5 +1,14 @@
 body {
-  background-color: #c8cbcb;
+  background-color: #ffffff;
+}
+
+h4,h1{
+    text-align: center;
+}
+
+#li-username{
+    line-height: 50px;
+    color: #777777;
 }
 
 @media (min-width: 768px){

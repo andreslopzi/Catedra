@@ -5,7 +5,48 @@
 {% load staticfiles %}
     <div class="container">
         <div class="row">
-            <h2>Nombre: {{ curso.nombre }}</h2>
+            <h1>{{ curso.nombre }}</h1>
+        </div>
+
+        <div class="row">
+           {% for monitor in curso.monitores.all %}
+            <tr>
+                <td>{{ monitor.username }}</td>
+            </tr>
+            {% endfor %}
+        </div>
+        <div id="notebooks" ng-app="notebooks" ng-controller="NotebookListCtrl">
+          <ul id="notebook_ul">
+              {%  for clase in previous %}
+                  <li>previous</li>
+                    <li class="li-clase li-previous">
+                      inicio: {{clase.inicio}}<br/>
+                      fin: {{clase.fin}}<br/>
+                    </li>
+              {% endfor %}
+                  <li>now</li>
+              {%  for clase in now %}
+                    <li class="li-clase li-active">
+                      inicio: {{clase.inicio}}<br/>
+                      fin: {{clase.fin}}<br/>
+                    </li>
+              {% endfor %}
+                  <li>next</li>
+              {%  for clase in next %}
+                    <li class="li-clase li-next">
+                      inicio: {{clase.inicio}}<br/>
+                      fin: {{clase.fin}}<br/>
+                    </li>
+              {% endfor %}
+                  <li>error</li>
+              {%  for clase in errorList %}
+                    <li class="li-clase li-error">
+                      inicio: {{clase.inicio}}<br/>
+                      fin: {{clase.fin}}<br/>
+                    </li>
+              {% endfor %}
+          </ul>
+          <span>Numero total de sessiones: {{curso.clases.all|length}}</span>
         </div>
     </div>
 {% endblock %}

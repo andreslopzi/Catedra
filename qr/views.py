@@ -2,8 +2,10 @@ from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth import authenticate, login, logout
 from django.http import HttpResponseRedirect, HttpResponse
 from django.core.urlresolvers import reverse
+from datetime import datetime
 
 from .models import *
+from .utils import *
 
 # Create your views here.
 def signin(request):
@@ -51,7 +53,29 @@ def curso(request, id_curso):
     if request.user not in curso.monitores.all():
         return redirect('qr:home')
 
+    previous = []
+    next = []
+    now = []
+    errorList = []
+    dateNow = datetime.now()
+    for clase in curso.clases.all():
+        #clase = curso.clases.all()[1]
+        if compareDate2(dateNow,clase.fin,True) and compareDate2(dateNow,clase.inicio,True):
+            previous.append(clase)
+        elif compareDate2(dateNow,clase.inicio,False) and compareDate2(dateNow,clase.fin,False):
+            next.append(clase)
+        elif compareDate2(dateNow,clase.inicio,True) and compareDate2(dateNow,clase.fin,False):
+            now.append(clase)
+        else:
+            errorList.append(clase)
+
+
     context = {
-        "curso" : curso
+        "curso" : curso,
+        "previous": previous,
+        "next": next,
+        "now": now,
+        "errorList": errorList
     }
     return render(request, "qr/curso.html", context)
+
