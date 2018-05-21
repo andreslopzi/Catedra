@@ -42,7 +42,9 @@
                   </ul>
                   <ul class="nav navbar-nav right-nav">
                     <li id="li-username">
-                        Usuario: {{ user.username }}
+                        <a href="#">
+                            <i class="fa fa-user-o" aria-hidden="true"></i> {{ user.username }}
+                        </a>
                     </li>
                     {% if user.is_authenticated %}
                         <li>

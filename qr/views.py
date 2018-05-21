@@ -79,3 +79,9 @@ def curso(request, id_curso):
     }
     return render(request, "qr/curso.html", context)
 
+def clase(request, id_clase):
+    clase = get_object_or_404(Clase, pk=id_clase)
+    context = {
+        "clase": clase,
+    }
+    return render(request, "qr/clase.html", context)
