@@ -12,37 +12,40 @@
                 <p>Información del curso</p>
             </div>
             <div class="col-sm-6">
-                <h3>Sesiones activas</h3>
-                <div id="notebooks" >
-                  <ul id="notebook_ul">
-                      {%  for clase in previous %}
-                            <li class="li-clase li-previous">
-                              inicio: {{clase.inicio}}<br/>
-                              fin: {{clase.fin}}<br/>
-                            </li>
-                      {% endfor %}
-                      {%  for clase in now %}
+                <div class="row">
+                    <h3>Sesiones activas</h3>
+                    <div class="notebooks" >
+                      <ul class="notebook_ul">
+                          {%  for clase in now %}
                             <li class="li-clase li-active">
                                 <a href="{% url 'qr:clase' curso.id clase.id%}">
                                   inicio: {{clase.inicio}}<br/>
                                   fin: {{clase.fin}}<br/>
                                 </a>
                             </li>
-                      {% endfor %}
-                      {%  for clase in next %}
+                          {% endfor %}
+                          {%  for clase in next %}
                             <li class="li-clase li-next">
                               inicio: {{clase.inicio}}<br/>
                               fin: {{clase.fin}}<br/>
                             </li>
-                      {% endfor %}
-                      {%  for clase in errorList %}
-                            <li class="li-clase li-error">
-                              inicio: {{clase.inicio}}<br/>
-                              fin: {{clase.fin}}<br/>
-                            </li>
-                      {% endfor %}
-                  </ul>
-                  <span>Número total de sesiones: {{curso.clases.all|length}}</span>
+                          {% endfor %}
+                      </ul>
+                      <span>Número total de sesiones: {{curso.clases.all|length}}</span>
+                    </div>
+                </div>
+                <div class="row">
+                    <h3>Sesiones pasadas</h3>
+                    <div class="notebooks" >
+                        <ul class="notebook_ul">
+                            {%  for clase in previous %}
+                                <li class="li-clase li-previous">
+                                  inicio: {{clase.inicio}}<br/>
+                                  fin: {{clase.fin}}<br/>
+                                </li>
+                            {% endfor %}
+                        </ul>
+                    </div>
                 </div>
             </div>
         </div>

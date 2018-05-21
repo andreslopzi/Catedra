@@ -2,10 +2,11 @@ from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth import authenticate, login, logout
 from django.http import HttpResponseRedirect, HttpResponse
 from django.core.urlresolvers import reverse
+from django.db.models import Q
+from django.utils import timezone
 from datetime import datetime
 
 from .models import *
-from .utils import *
 
 # Create your views here.
 def signin(request):
@@ -53,29 +54,16 @@ def curso(request, id_curso):
     if request.user not in curso.monitores.all():
         return redirect('qr:home')
 
-    previous = []
-    next = []
-    now = []
-    errorList = []
-    dateNow = datetime.now()
-    for clase in curso.clases.all():
-        #clase = curso.clases.all()[1]
-        if compareDate2(dateNow,clase.fin,True) and compareDate2(dateNow,clase.inicio,True):
-            previous.append(clase)
-        elif compareDate2(dateNow,clase.inicio,False) and compareDate2(dateNow,clase.fin,False):
-            next.append(clase)
-        elif compareDate2(dateNow,clase.inicio,True) and compareDate2(dateNow,clase.fin,False):
-            now.append(clase)
-        else:
-            errorList.append(clase)
-
+    dateNow = datetime.now(tz=timezone.utc)
+    previous = curso.clases.all().filter(fin__lt=dateNow)
+    next = curso.clases.all().filter(inicio__gt=dateNow)
+    now = curso.clases.all().filter(Q(inicio__lt=dateNow)&Q(fin__gt=dateNow))
 
     context = {
         "curso" : curso,
         "previous": previous,
         "next": next,
-        "now": now,
-        "errorList": errorList
+        "now": now
     }
     return render(request, "qr/curso.html", context)
 
