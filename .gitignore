@@ -123,5 +123,3 @@ fabric.properties
 *.pyc
 .DS_Store
 qrvenv
-.idea/catedra.iml
-.idea/misc.xml
