@@ -67,7 +67,7 @@ def curso(request, id_curso):
     }
     return render(request, "qr/curso.html", context)
 
-def clase(request,id_curso, id_clase):
+def clase(request,id_curso, id_clase, active):
 
     if request.user.is_authenticated():
         if request.method == "POST":
@@ -77,8 +77,14 @@ def clase(request,id_curso, id_clase):
 
     curso = get_object_or_404(Curso, pk=id_curso)
     clase = get_object_or_404(Clase, pk=id_clase)
+    clase = get_object_or_404(Clase, pk=id_clase)
+
+    asistencias =  Asistencia.objects.filter(Q(fecha__gt=clase.inicio) & Q(fecha__lt=clase.fin) & Q(curso=curso))
+
     context = {
         "clase": clase,
-        "curso": curso
+        "curso": curso,
+        "active": active,
+        "asistencias":asistencias
     }
     return render(request, "qr/clase.html", context)

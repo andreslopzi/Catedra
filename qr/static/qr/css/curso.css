@@ -1,6 +1,7 @@
 .notebooks {
   background: whitesmoke;
-  width: 400px;
+  max-width: 400px;
+  width: 100%;
   border: 1px solid rgba(0, 0, 0, 0.2);
   border-radius: 5px;
   box-shadow: inset 1px 1px 0 white;
@@ -87,7 +88,8 @@
   background: #FFD32E;
   bottom: -35px;
   left: -1px;
-  width:400px;
+  max-width: 400px;
+  width: 100%;
   border-radius: 0 0 5px 5px;
   border: 1px solid rgba(0, 0, 0, 0.1);
   padding: 10px;

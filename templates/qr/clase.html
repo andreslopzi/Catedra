@@ -19,6 +19,7 @@
             <h5>Inicio: {{ clase.inicio }}  Fin: {{ clase.fin }} </h5>
         </div>
         <div clas="row">
+            {% if active %}
             <div class="col-sm-6" ng-controller="scan-controller">
                 <p>QR</p>
                 <button class="btn btn-success" ng-click="start()"><i class="fa fa-qrcode" aria-hidden="true"></i></button>
@@ -32,6 +33,29 @@
             <div class="col-sm-6">
                 <p>Listado tomado</p>
             </div>
+            {% else %}
+                <div class="col-sm-12">
+                    <h4>Listado de asistencia tomado</h4>
+                    <table class="table">
+                      <thead class="thead-light">
+                        <tr>
+                          <th scope="col">Documento</th>
+                          <th scope="col">Nombre</th>
+                          <th scope="col">Hora Asistencia</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        {%  for asistencia in asistencias %}
+                            <tr>
+                              <td>{{ asistencia.estudiante.identificacion }}</td>
+                              <td>{{ asistencia.estudiante.nombre }}</td>
+                              <td>{{ asistencia.fecha }}</td>
+                            </tr>
+                        {% endfor %}
+                      </tbody>
+                    </table>
+                </div>
+            {% endif %}
         </div>
     </div>
 {% endblock %}

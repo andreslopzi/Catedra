@@ -11,6 +11,13 @@ h4,h1,h2,h3,h5{
     color: #777777;
 }
 
+.nav-title{
+    line-height: 50px;
+    color: #777777;
+    margin-left: 10px;
+    font-size: 20px ;
+}
+
 @media (min-width: 768px){
     .right-nav{
         float: right;

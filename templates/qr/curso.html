@@ -18,14 +18,27 @@
                     <h3>Sesiones activas</h3>
                     <div class="notebooks" >
                       <ul class="notebook_ul">
+                        {% if not now %}
+                            <h4>No hay sesiones activas en este momento</h4>
+                        {% endif %}
                           {%  for clase in now %}
                             <li class="li-clase li-active">
-                                <a href="{% url 'qr:clase' curso.id clase.id%}">
+                                <a href="{% url 'qr:clase_activa' curso.id clase.id%}">
                                   inicio: {{clase.inicio}}<br/>
                                   fin: {{clase.fin}}<br/>
                                 </a>
                             </li>
                           {% endfor %}
+                      </ul>
+                    </div>
+                </div>
+                    <div class="row">
+                        <h3>Sesiones siguientes</h3>
+                        <div class="notebooks" >
+                            <ul class="notebook_ul">
+                             {% if not next %}
+                            <h4>No hay sesiones proximas</h4>
+                            {% endif %}
                           {%  for clase in next %}
                             <li class="li-clase li-next">
                               inicio: {{clase.inicio}}<br/>
@@ -33,17 +46,22 @@
                             </li>
                           {% endfor %}
                       </ul>
-                      <span>Número total de sesiones: {{curso.clases.all|length}}</span>
+                      <!--<span>Número total de sesiones: {{curso.clases.all|length}}</span>-->
                     </div>
                 </div>
                 <div class="row">
                     <h3>Sesiones pasadas</h3>
                     <div class="notebooks" >
                         <ul class="notebook_ul">
+                         {% if not previous %}
+                            <h4>No hay sesiones pasadas registradas</h4>
+                        {% endif %}
                             {%  for clase in previous %}
                                 <li class="li-clase li-previous">
+                                 <a href="{% url 'qr:clase' curso.id clase.id %}">
                                   inicio: {{clase.inicio}}<br/>
                                   fin: {{clase.fin}}<br/>
+                                 </a>
                                 </li>
                             {% endfor %}
                         </ul>
