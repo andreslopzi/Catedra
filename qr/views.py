@@ -79,9 +79,11 @@ def curso(request, id_curso):
     }
     return render(request, "qr/curso.html", context)
 
-def clase(request, id_clase):
+def clase(request,id_curso, id_clase):
+    curso = get_object_or_404(Curso, pk=id_curso)
     clase = get_object_or_404(Clase, pk=id_clase)
     context = {
         "clase": clase,
+        "curso": curso
     }
     return render(request, "qr/clase.html", context)
