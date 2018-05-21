@@ -1,16 +1,33 @@
 {% extends 'qr/base.html' %}
+{% load staticfiles %}
+
 {% block title %}{{ curso.nombre }}{% endblock %}
 
+{% block head %}
+    <script src="{% static "qr/js/angular.min.js" %}"></script>
+    <!--<script src="{% static "qr/js/angular.min.js.map" %}"></script>-->
+    <script src="{% static "qr/js/qr.angular.js" %}"></script>
+    <script src="{% static "qr/js/webcam.js" %}"></script>
+    <script src="{% static "qr/js/bc-qr-reader.js" %}"></script>
+    <link rel='stylesheet' href="{% static "qr/css/qr.css" %}" />
+
+{% endblock %}
 {% block body %}
-{% load staticfiles %}
-    <div class="container">
+    <div class="container" ng-app="Scanner">
         <div class="row center">
             <h3>{{ curso.nombre }}</h3>
             <h5>Inicio: {{ clase.inicio }}  Fin: {{ clase.fin }} </h5>
         </div>
         <div clas="row">
-            <div class="col-sm-6">
+            <div class="col-sm-6" ng-controller="scan-controller">
                 <p>QR</p>
+                <button class="btn btn-success" ng-click="start()"><i class="fa fa-qrcode" aria-hidden="true"></i></button>
+                <p ng-hide="cameraRequested">El navegador debera pedir permiso para acceder a la camara</p>
+                <div>
+                  <bc-qr-reader active="cameraRequested" on-result="processURLfromQR" on-error="onError" camera-status="cameraIsOn" width="200px" height="200px"></bc-qr-reader>
+                </div>
+                <p ng-show="url">QR Detectado</p>
+                {% verbatim %}<p><b>{{ url }}</b></p>{% endverbatim %}
             </div>
             <div class="col-sm-6">
                 <p>Listado tomado</p>

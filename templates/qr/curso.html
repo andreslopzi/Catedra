@@ -1,8 +1,10 @@
 {% extends 'qr/base.html' %}
-{% block title %}{{ curso.nombre }}{% endblock %}
-
-{% block body %}
 {% load staticfiles %}
+{% block title %}{{ curso.nombre }}{% endblock %}
+{% block head %}
+    <link rel="stylesheet" href="{% static "qr/css/curso.css" %}">
+{% endblock %}
+{% block body %}
     <div class="container">
         <div class="row">
             <h1>{{ curso.nombre }}</h1>
