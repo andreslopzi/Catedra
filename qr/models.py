@@ -16,7 +16,7 @@ class Clase(models.Model):
         return "Inicio: " + str(self.inicio) + " - Fin: " + str(self.fin)
 
 class Curso(models.Model):
-    nombre = models.CharField(max_length=20)
+    nombre = models.CharField(max_length=300)
     clases = models.ManyToManyField(Clase)
     monitores = models.ManyToManyField(User)
 
