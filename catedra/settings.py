@@ -21,6 +21,8 @@ PROJECT_ROOT = os.path.dirname(os.path.abspath(__file__))
 # See https://docs.djangoproject.com/en/1.11/howto/deployment/checklist/
 
 # SECURITY WARNING: don't run with debug turned on in production!
+SKEY = os.environ.get('SKEY')
+SECRET_KEY = SKEY
 
 # Application definition
 
