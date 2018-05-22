@@ -125,3 +125,4 @@ fabric.properties
 qrvenv
 .idea/catedra.iml
 .idea/misc.xml
+localsettings.py
