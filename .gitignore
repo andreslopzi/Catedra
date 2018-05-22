@@ -123,5 +123,5 @@ fabric.properties
 *.pyc
 .DS_Store
 qrvenv
-catedra.iml
-misc.xml
+.idea/catedra.iml
+.idea/misc.xml

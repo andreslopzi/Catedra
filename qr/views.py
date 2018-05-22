@@ -57,7 +57,7 @@ def curso(request, id_curso):
     dateNow = datetime.now(tz=timezone.utc)
     previous = curso.clases.all().filter(fin__lt=dateNow)
     next = curso.clases.all().filter(inicio__gt=dateNow)
-    now = curso.clases.all().filter(Q(inicio__lt=dateNow)&Q(fin__gt=dateNow))
+    now = curso.clases.all().filter(Q(inicio__lte=dateNow)&Q(fin__gt=dateNow))
 
     context = {
         "curso" : curso,
@@ -67,7 +67,7 @@ def curso(request, id_curso):
     }
     return render(request, "qr/curso.html", context)
 
-def clase(request,id_curso, id_clase, active):
+def clase(request,id_curso, id_clase):
 
     if request.user.is_authenticated():
         if request.method == "POST":
@@ -77,14 +77,13 @@ def clase(request,id_curso, id_clase, active):
 
     curso = get_object_or_404(Curso, pk=id_curso)
     clase = get_object_or_404(Clase, pk=id_clase)
-    clase = get_object_or_404(Clase, pk=id_clase)
 
-    asistencias =  Asistencia.objects.filter(Q(fecha__gt=clase.inicio) & Q(fecha__lt=clase.fin) & Q(curso=curso))
+    asistencias = Asistencia.objects.filter(Q(fecha__gt=clase.inicio) & Q(fecha__lt=clase.fin) & Q(curso=curso))
 
     context = {
         "clase": clase,
         "curso": curso,
-        "active": active,
+        "active": clase.inicio <= datetime.now(tz=timezone.utc) and clase.fin > datetime.now(tz=timezone.utc),
         "asistencias":asistencias
     }
     return render(request, "qr/clase.html", context)

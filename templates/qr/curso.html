@@ -23,7 +23,7 @@
                         {% endif %}
                           {%  for clase in now %}
                             <li class="li-clase li-active">
-                                <a href="{% url 'qr:clase_activa' curso.id clase.id%}">
+                                <a href="{% url 'qr:clase' curso.id clase.id%}">
                                   inicio: {{clase.inicio}}<br/>
                                   fin: {{clase.fin}}<br/>
                                 </a>
