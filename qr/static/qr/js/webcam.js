@@ -124,6 +124,7 @@ angular.module('webcam', [])
           /*  Capturar camaras */
             if (!navigator.mediaDevices || !navigator.mediaDevices.enumerateDevices) {
                 console.log("enumerateDevices() not supported.");
+                alert("enumerateDevices() not supported.");
                 return;
             }
 
