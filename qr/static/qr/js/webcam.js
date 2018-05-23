@@ -124,7 +124,7 @@ angular.module('webcam', [])
             return;
           }
 
-          var mediaConstraint = { video: true, audio: false };
+          var mediaConstraint = { video: {facingMode: { exact: "environment" }}, audio: false };
           navigator.getMedia(mediaConstraint, onSuccess, onFailure);
 
           /* Start streaming the webcam data when the video element can play
