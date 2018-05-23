@@ -141,7 +141,7 @@ angular.module('webcam', [])
                   }
               });
 
-              //alert(id_camara);
+              alert("ID Camara: " + id_camara);
               var mediaConstraint = { audio: false, video: { deviceId: {exact: id_camara} } }
               //navigator.getMedia(mediaConstraint, onSuccess, onFailure);
               navigator.mediaDevices.getUserMedia(mediaConstraint).then(function(stream) {
@@ -151,40 +151,33 @@ angular.module('webcam', [])
                   onFailure(err)
               });
               //navigator.getUserMedia(mediaConstraint, onSuccess, onFailure);
+
+
+              videoElem.addEventListener('canplay', function() {
+                if (!isStreaming) {
+                  var scale = width / videoElem.videoWidth;
+                  height = (videoElem.videoHeight * scale) ||
+                            $scope.config.videoHeight;
+                  videoElem.setAttribute('width', width);
+                  videoElem.setAttribute('height', height);
+                  isStreaming = true;
+
+                  $scope.config.video = videoElem;
+
+                  _removeDOMElement(placeholder);
+
+                  /* Call custom callback */
+                  if ($scope.onStreaming) {
+                    $scope.onStreaming();
+                  }
+                }
+              }, false);
+
             })
             .catch(function(err) {
               console.log(err.name + ": " + err.message);
             });
 
-
-            //var mediaConstraint = { audio: false, video: { facingMode: { exact: "environment" } } }
-            //var mediaConstraint = { audio: false, video: { deviceId: {exact: id_camara} } }
-            //var mediaConstraint = { audio: false, video: true }
-
-            //navigator.getMedia(mediaConstraint, onSuccess, onFailure);
-
-          /* Start streaming the webcam data when the video element can play
-           * It will do it only once
-           */
-          videoElem.addEventListener('canplay', function() {
-            if (!isStreaming) {
-              var scale = width / videoElem.videoWidth;
-              height = (videoElem.videoHeight * scale) ||
-                        $scope.config.videoHeight;
-              videoElem.setAttribute('width', width);
-              videoElem.setAttribute('height', height);
-              isStreaming = true;
-
-              $scope.config.video = videoElem;
-
-              _removeDOMElement(placeholder);
-
-              /* Call custom callback */
-              if ($scope.onStreaming) {
-                $scope.onStreaming();
-              }
-            }
-          }, false);
         };
 
         var stopWebcam = function stopWebcam() {
