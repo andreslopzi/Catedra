@@ -132,12 +132,16 @@ angular.module('webcam', [])
             }
 
             var id_camara;
+            var first_cam = 0;
 
             navigator.mediaDevices.enumerateDevices()
             .then(function(devices) {
               devices.forEach(function(device) {
                   if(device.kind === 'videoinput'){
-                      id_camara = device.deviceId;
+                      if(first_cam == 0){
+                          id_camara = device.deviceId;
+                      }
+                      first_cam++;
                   }
               });
 
