@@ -63,17 +63,13 @@ angular.module('webcam', [])
         var onSuccess = function onSuccess(stream) {
           videoStream = stream;
 
-          // Firefox supports a src object
-          if (navigator.mozGetUserMedia) {
-            videoElem.mozSrcObject = stream;
-          } else {
-            var vendorURL = window.URL || window.webkitURL;
-            try{
-              videoElem.src = vendorURL.createObjectURL(stream);
-             }catch(e){
-               videoElem.srcObject = stream // for deprecated browser such as Safari
-             }
+          var vendorURL = window.URL || window.webkitURL;
+          try{
+            videoElem.src = vendorURL.createObjectURL(stream);
+          }catch(e){
+             videoElem.srcObject = stream // for deprecated browser such as Safari
           }
+
 
           /* Start playing the video to show the stream from the webcam */
           videoElem.play();
@@ -147,8 +143,14 @@ angular.module('webcam', [])
 
               //alert(id_camara);
               var mediaConstraint = { audio: false, video: { deviceId: {exact: id_camara} } }
-              //navigator.mediaDevices.getUserMedia(mediaConstraint)
-              navigator.getUserMedia(mediaConstraint, onSuccess, onFailure);
+              //navigator.getMedia(mediaConstraint, onSuccess, onFailure);
+              navigator.mediaDevices.getUserMedia(mediaConstraint).then(function(stream) {
+                  onSuccess(stream)
+              })
+              .catch(function(err) {
+                  onFailure(err)
+              });
+              //navigator.getUserMedia(mediaConstraint, onSuccess, onFailure);
             })
             .catch(function(err) {
               console.log(err.name + ": " + err.message);
