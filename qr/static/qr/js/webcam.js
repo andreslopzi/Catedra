@@ -63,13 +63,13 @@ angular.module('webcam', [])
         var onSuccess = function onSuccess(stream) {
           videoStream = stream;
 
+
           var vendorURL = window.URL || window.webkitURL;
           try{
-            videoElem.src = vendorURL.createObjectURL(stream);
+            videoElem.srcObject = stream
           }catch(e){
-             videoElem.srcObject = stream // for deprecated browser such as Safari
+            videoElem.src = vendorURL.createObjectURL(stream);
           }
-
 
           /* Start playing the video to show the stream from the webcam */
           videoElem.play();
@@ -120,65 +120,38 @@ angular.module('webcam', [])
             return;
           }
 
+          var mediaConstraint = { video: { facingMode: "environment"}, audio: false };
 
-          /*  Capturar camaras */
-            if (!navigator.mediaDevices || !navigator.mediaDevices.enumerateDevices) {
-                console.log("enumerateDevices() not supported.");
-                alert("enumerateDevices() not supported.");
-                return;
-            }
-
-            var id_camara;
-            var first_cam = 0;
-
-            navigator.mediaDevices.enumerateDevices()
-            .then(function(devices) {
-              devices.forEach(function(device) {
-                  if(device.kind === 'videoinput'){
-                      if(first_cam == 0){
-                          id_camara = device.deviceId;
-                      }
-                      first_cam++;
-                  }
-              });
-
-              alert("ID Camara: " + id_camara);
-              var mediaConstraint = { audio: false, video: { deviceId: {exact: id_camara} } }
-              //navigator.getMedia(mediaConstraint, onSuccess, onFailure);
-              navigator.mediaDevices.getUserMedia(mediaConstraint).then(function(stream) {
-                  onSuccess(stream)
-              })
-              .catch(function(err) {
-                  onFailure(err)
-              });
-              //navigator.getUserMedia(mediaConstraint, onSuccess, onFailure);
-
-
-              videoElem.addEventListener('canplay', function() {
-                if (!isStreaming) {
-                  var scale = width / videoElem.videoWidth;
-                  height = (videoElem.videoHeight * scale) ||
-                            $scope.config.videoHeight;
-                  videoElem.setAttribute('width', width);
-                  videoElem.setAttribute('height', height);
-                  isStreaming = true;
-
-                  $scope.config.video = videoElem;
-
-                  _removeDOMElement(placeholder);
-
-                  /* Call custom callback */
-                  if ($scope.onStreaming) {
-                    $scope.onStreaming();
-                  }
-                }
-              }, false);
-
+          navigator.mediaDevices.getUserMedia(mediaConstraint)
+            .then(function(stream) {
+              onSuccess(stream);
             })
             .catch(function(err) {
-              console.log(err.name + ": " + err.message);
+              onFailure(err);
             });
 
+          /* Start streaming the webcam data when the video element can play
+           * It will do it only once
+           */
+          videoElem.addEventListener('canplay', function() {
+            if (!isStreaming) {
+              var scale = width / videoElem.videoWidth;
+              height = (videoElem.videoHeight * scale) ||
+                        $scope.config.videoHeight;
+              videoElem.setAttribute('width', width);
+              videoElem.setAttribute('height', height);
+              isStreaming = true;
+
+              $scope.config.video = videoElem;
+
+              _removeDOMElement(placeholder);
+
+              /* Call custom callback */
+              if ($scope.onStreaming) {
+                $scope.onStreaming();
+              }
+            }
+          }, false);
         };
 
         var stopWebcam = function stopWebcam() {
