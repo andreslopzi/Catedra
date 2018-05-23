@@ -29,6 +29,8 @@
                 </div>
                 <p ng-show="url">QR Detectado</p>
                 {% verbatim %}<p><b>{{ url }}</b></p>{% endverbatim %}
+                <!--<select ng-model="select-camera" ng-options="c as c for c in cameras"></select>-->
+                <p ng-bind="cameras"></p>
             </div>
             <div class="col-sm-6">
                 <p>Listado tomado</p>

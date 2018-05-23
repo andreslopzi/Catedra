@@ -124,8 +124,36 @@ angular.module('webcam', [])
             return;
           }
 
-          var mediaConstraint = { video: {facingMode: { exact: "environment" }}, audio: false };
-          navigator.getMedia(mediaConstraint, onSuccess, onFailure);
+
+          /*  Capturar camaras */
+            if (!navigator.mediaDevices || !navigator.mediaDevices.enumerateDevices) {
+                console.log("enumerateDevices() not supported.");
+                return;
+            }
+
+            var id_camara;
+
+            navigator.mediaDevices.enumerateDevices()
+            .then(function(devices) {
+              devices.forEach(function(device) {
+                  if(device.kind === 'videoinput'){
+                      id_camara = device.deviceId;
+                  }
+              });
+
+              //alert(id_camara);
+              var mediaConstraint = { audio: false, video: { deviceId: {exact: id_camara} } }
+              navigator.getMedia(mediaConstraint, onSuccess, onFailure);
+            })
+            .catch(function(err) {
+              console.log(err.name + ": " + err.message);
+            });
+
+            //var mediaConstraint = { audio: false, video: { facingMode: { exact: "environment" } } }
+            //var mediaConstraint = { audio: false, video: { deviceId: {exact: id_camara} } }
+            //var mediaConstraint = { audio: false, video: true }
+
+            //navigator.getMedia(mediaConstraint, onSuccess, onFailure);
 
           /* Start streaming the webcam data when the video element can play
            * It will do it only once
