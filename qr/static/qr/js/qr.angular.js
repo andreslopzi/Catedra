@@ -19,10 +19,12 @@ app.controller("scan-controller", function($scope, $http) {
              .then(function (response) {
                 if(response.status == 200){
                     //alert("Asistencias tomada con exito");
+                    $scope.respuesta = response.data;
+                    $scope.mensaje = $scope.respuesta["message"]
                 }
                 else{
+                    $scope.mensaje = "Error"
                     console.log(response.status)
-                    alert("ERROR!!!");
                 }
              });
 

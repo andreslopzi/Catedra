@@ -16,6 +16,7 @@ class Clase(models.Model):
         return "Inicio: " + str(self.inicio) + " - Fin: " + str(self.fin)
 
 class Curso(models.Model):
+    identificador = models.IntegerField(default=0000, null=False)
     nombre = models.CharField(max_length=300)
     clases = models.ManyToManyField(Clase)
     monitores = models.ManyToManyField(User)

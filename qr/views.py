@@ -1,6 +1,6 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth import authenticate, login, logout
-from django.http import HttpResponseRedirect, HttpResponse
+from django.http import HttpResponseRedirect, HttpResponse, JsonResponse
 from django.core.urlresolvers import reverse
 from django.db.models import Q
 from django.utils import timezone
@@ -69,15 +69,26 @@ def curso(request, id_curso):
 
 def clase(request,id_curso, id_clase):
 
-    if request.user.is_authenticated():
-        if request.method == "POST":
-            print(request.body.decode("utf-8"))
-            return HttpResponse()
-
-
     curso = get_object_or_404(Curso, pk=id_curso)
     clase = get_object_or_404(Clase, pk=id_clase)
+    monitor = get_object_or_404(User, pk=request.user.id)
 
+    if request.user.is_authenticated():
+        if request.method == "POST":
+            qr_text = request.body.decode("utf-8").split("?")
+            estudiante = get_object_or_404(Estudiante, identificacion=qr_text[0])
+            response = {}
+            if curso in estudiante.cursos.all() and curso.identificador == int(qr_text[1]) and monitor in curso.monitores.all():
+                asistencia = Asistencia.objects.create(curso=curso, estudiante=estudiante, monitor=monitor, fecha=datetime.now(tz=timezone.utc))
+                response["status"] = 200
+                response["message"] = "Asistencia tomada con exito"
+                print("Asistencia tomada")
+            else:
+                response["status"] = -200
+                response["message"] = "No se puede tomar la asistencia al estudiante"
+                print("Error al tomar asistencia")
+
+            return HttpResponse(JsonResponse(response))
     asistencias = Asistencia.objects.filter(Q(fecha__gt=clase.inicio) & Q(fecha__lt=clase.fin) & Q(curso=curso))
 
     context = {
