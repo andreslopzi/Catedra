@@ -18,7 +18,7 @@ app.controller("scan-controller", function($scope, $http) {
         $http.post("", $scope.url)
              .then(function (response) {
                 if(response.status == 200){
-                    alert("Asistencias tomada con exito");
+                    //alert("Asistencias tomada con exito");
                 }
                 else{
                     console.log(response.status)
