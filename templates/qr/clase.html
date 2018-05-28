@@ -13,14 +13,14 @@
 
 {% endblock %}
 {% block body %}
-    <div class="container" ng-app="Scanner">
+    <div class="container" ng-app="Scanner" ng-controller="scan-controller">
         <div class="row center">
             <h3>{{ curso.nombre }}</h3>
             <h5>Inicio: {{ clase.inicio }}  Fin: {{ clase.fin }} </h5>
         </div>
         <div clas="row">
             {% if active %}
-            <div class="col-sm-6" ng-controller="scan-controller">
+            <div class="col-sm-6">
                 <p>QR</p>
                 <button class="btn btn-success" ng-click="start()"><i class="fa fa-qrcode" aria-hidden="true"></i></button>
                 <p ng-hide="cameraRequested">El navegador debera pedir permiso para acceder a la camara</p>
@@ -33,32 +33,35 @@
                 <!--<select ng-model="select-camera" ng-options="c as c for c in cameras"></select>-->
                 <p ng-bind="cameras"></p>
             </div>
-            <div class="col-sm-6">
-                <p>Listado tomado</p>
-            </div>
-            {% else %}
-                <div class="col-sm-12">
-                    <h4>Listado de asistencia tomado</h4>
-                    <table class="table">
-                      <thead class="thead-light">
-                        <tr>
-                          <th scope="col">Documento</th>
-                          <th scope="col">Nombre</th>
-                          <th scope="col">Hora Asistencia</th>
-                        </tr>
-                      </thead>
-                      <tbody>
-                        {%  for asistencia in asistencias %}
-                            <tr>
-                              <td>{{ asistencia.estudiante.identificacion }}</td>
-                              <td>{{ asistencia.estudiante.nombre }}</td>
-                              <td>{{ asistencia.fecha }}</td>
-                            </tr>
-                        {% endfor %}
-                      </tbody>
-                    </table>
-                </div>
             {% endif %}
+            <div class="col-sm-12">
+                <h4>Listado de asistencia tomado</h4>
+                <table class="table">
+                  <thead class="thead-light">
+                    <tr>
+                      <th scope="col">Documento</th>
+                      <th scope="col">Nombre</th>
+                      <th scope="col">Hora Asistencia</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {%  for asistencia in asistencias %}
+                        <tr>
+                          <td>{{ asistencia.estudiante.identificacion }}</td>
+                          <td>{{ asistencia.estudiante.nombre }}</td>
+                          <td>{{ asistencia.fecha }}</td>
+                        </tr>
+                    {% endfor %}
+                    {% verbatim %}
+                    <tr ng-repeat="a in nuevas_asistencias">
+                        <td>{{ a.documento }}</td>
+                        <td>{{ a.nombre }}</td>
+                        <td>{{ a.hora }}</td>
+                    </tr>
+                    {% endverbatim %}
+                  </tbody>
+                </table>
+            </div>
         </div>
     </div>
 {% endblock %}

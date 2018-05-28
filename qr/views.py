@@ -1,6 +1,6 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth import authenticate, login, logout
-from django.http import HttpResponseRedirect, HttpResponse, JsonResponse
+from django.http import HttpResponseRedirect, HttpResponse, JsonResponse, HttpResponseNotFound, HttpResponseBadRequest
 from django.core.urlresolvers import reverse
 from django.db.models import Q
 from django.utils import timezone
@@ -82,6 +82,7 @@ def clase(request,id_curso, id_clase):
                 asistencia = Asistencia.objects.create(curso=curso, estudiante=estudiante, monitor=monitor, fecha=datetime.now(tz=timezone.utc))
                 response["status"] = 200
                 response["message"] = "Asistencia tomada con exito"
+                response["asistencia"] = {"nombre": asistencia.estudiante.nombre, "documento": asistencia.estudiante.identificacion}
                 print("Asistencia tomada")
             else:
                 response["status"] = -200
