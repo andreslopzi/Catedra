@@ -33,7 +33,6 @@ app.controller("scan-controller", function($scope, $http) {
                              );
                      }
                  }
-                 alert($scope.nuevas_asistencias);
              }, function(response){
                   $scope.mensaje = "Datos no existen"
              });
