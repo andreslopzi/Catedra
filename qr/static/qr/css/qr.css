@@ -58,8 +58,11 @@ a{
     .right-nav{
         float: right;
     }
-    .nav-title{
-    font-size: 10px ;
-    line-height: 12px;
+}
+
+@media (max-width: 768px) {
+    .nav-title {
+        font-size: 14px;
+        line-height: 50px;
     }
 }
