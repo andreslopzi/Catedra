@@ -80,7 +80,9 @@ def clase(request,id_curso, id_clase):
     clase = get_object_or_404(Clase, pk=id_clase)
     monitor = get_object_or_404(User, pk=request.user.id)
     asistencias = Asistencia.objects.filter(Q(fecha__gt=clase.inicio) & Q(fecha__lt=clase.fin) & Q(curso=curso))
-    locale.setlocale(locale.LC_ALL, "es_ES.UTF-8")
+
+    #locale.setlocale(locale.LC_ALL, "es_ES.UTF-8")
+
     currentDate = datetime.now() - timedelta(hours=5)
     formato_local = "%d de %B del %Y a las %I:%M"
     if request.user.is_authenticated():
