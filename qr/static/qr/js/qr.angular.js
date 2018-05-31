@@ -1,12 +1,9 @@
 var app = angular.module("Scanner", ['webcam', 'bcQrReader']);
 
-
 app.controller("scan-controller", function($scope, $http) {
 
     $scope.nuevas_asistencias = [];
     $scope.identificacion = "";
-
-
     $scope.start = function() {
       $scope.cameraRequested = true;
   }
@@ -82,5 +79,4 @@ app.controller("scan-controller", function($scope, $http) {
          });
 
   }
-
 });
