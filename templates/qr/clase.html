@@ -14,7 +14,7 @@
 {% block body %}
     <div class="container" ng-app="Scanner" ng-controller="scan-controller">
         <div class="row center">
-            <h3><b>{{ curso.nombre }}</b></h3>
+            <h3><b><a class="yellow" href="{% url 'qr:curso' curso.id %}">{{ curso.nombre }}</a></b></h3>
             <p class="center hora"><b>Inicio:</b> {{ clase.inicio }}</p>
             <p class="center hora"><b>Fin:</b> {{ clase.fin }}</p>
         </div>
@@ -31,8 +31,8 @@
                 <br>
                 <p ng-hide="cameraRequested">El navegador debera pedir permiso para acceder a la camara</p>
                 <br>
-                <div class="center">
-                  <bc-qr-reader class="qr_camera" active="cameraRequested" on-result="processURLfromQR" on-error="onError" camera-status="cameraIsOn"></bc-qr-reader>
+                <div>
+                  <bc-qr-reader class="qr_camera" active="cameraRequested" on-result="processURLfromQR" on-error="onError" camera-status="cameraIsOn"  width="100px" height="100px"></bc-qr-reader>
                 </div>
                 <p ng-show="url">QR Detectado: {% verbatim %}<b>{{ url }}</b>{% endverbatim %}</p>
 
@@ -77,7 +77,7 @@
                     <tr ng-repeat="a in nuevas_asistencias">
                         <td>{{ a.documento }}</td>
                         <td>{{ a.nombre }}</td>
-                        <td>{{ a.hora }}</td>
+                        <td>{{ a.fecha }}</td>
                     </tr>
                     {% endverbatim %}
                   </tbody>

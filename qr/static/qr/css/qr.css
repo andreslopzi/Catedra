@@ -2,7 +2,7 @@ body {
   background-color: #ffffff;
 }
 
-h4,h1,h2,h3,h5{
+h4,h1,h2,h3,h5, .yellow{
     color: #FF9000;
 }
 

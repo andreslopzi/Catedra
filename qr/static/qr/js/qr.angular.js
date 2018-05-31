@@ -21,7 +21,7 @@ app.controller("scan-controller", function($scope, $http) {
 
         $http.defaults.xsrfCookieName = 'csrftoken';
         $http.defaults.xsrfHeaderName = 'X-CSRFToken';
-
+        $scope.CurrentDate = new Date();
         $http.post("", $scope.url)
              .then(function (response) {
                  $scope.mal = true
@@ -33,9 +33,10 @@ app.controller("scan-controller", function($scope, $http) {
                              {
                                  "documento": $scope.respuesta["asistencia"]["documento"],
                                  "nombre": $scope.respuesta["asistencia"]["nombre"],
-                                 "hora": "1 de la manana",
+                                 "fecha": $scope.respuesta["fecha"]
                              }
                              );
+                         $scope.url = $scope.url.split("?",1)
                          $scope.mal = false
                          $scope.bien = true
 
@@ -67,7 +68,7 @@ app.controller("scan-controller", function($scope, $http) {
                          {
                              "documento": $scope.respuesta["asistencia"]["documento"],
                              "nombre": $scope.respuesta["asistencia"]["nombre"],
-                             "hora": "1 de la manana",
+                             "hora":  $scope.respuesta["fecha"],
                          }
                          );
                      $scope.bien = true

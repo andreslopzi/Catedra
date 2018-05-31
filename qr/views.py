@@ -4,7 +4,8 @@ from django.http import HttpResponseRedirect, HttpResponse, JsonResponse, HttpRe
 from django.core.urlresolvers import reverse
 from django.db.models import Q
 from django.utils import timezone
-from datetime import datetime
+from datetime import datetime, timedelta
+import locale
 
 from .models import *
 
@@ -79,7 +80,9 @@ def clase(request,id_curso, id_clase):
     clase = get_object_or_404(Clase, pk=id_clase)
     monitor = get_object_or_404(User, pk=request.user.id)
     asistencias = Asistencia.objects.filter(Q(fecha__gt=clase.inicio) & Q(fecha__lt=clase.fin) & Q(curso=curso))
-
+    locale.setlocale(locale.LC_ALL, "es_ES.UTF-8")
+    currentDate = datetime.now() - timedelta(hours=5)
+    formato_local = "%d de %B del %Y a las %I:%M"
     if request.user.is_authenticated():
         if request.method == "POST":
             qr_text = request.body.decode("utf-8").split("?")
@@ -94,6 +97,7 @@ def clase(request,id_curso, id_clase):
                 response["status"] = 200
                 response["message"] = "Asistencia tomada con exito"
                 response["asistencia"] = {"nombre": asistencia.estudiante.nombre, "documento": asistencia.estudiante.identificacion}
+                response["fecha"] = currentDate.strftime(formato_local)
                 print("Asistencia tomada")
             else:
                 response["status"] = -200
