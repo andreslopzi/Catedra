@@ -1,6 +1,9 @@
+.sesiones_list{
+  padding: 0 40px;
+}
+
 .notebooks {
   background: whitesmoke;
-  max-width: 400px;
   width: 100%;
   border: 1px solid rgba(0, 0, 0, 0.2);
   border-radius: 5px;

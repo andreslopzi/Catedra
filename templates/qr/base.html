@@ -25,7 +25,9 @@
               <div class="container-fluid">
                 <!-- Brand and toggle get grouped for better mobile display -->
                 <div class="navbar-header">
-                    <span class="nav-title">Asistencia cátedra</span>
+                    <a class="li_nav" href="{% url 'qr:home' %}">
+                        <span class="nav-title">CÁTEDRA <span class="text-gray">INTERNACIONAL</span></span>
+                    </a>
                   <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
                     <span class="sr-only">Toggle navigation</span>
                     <span class="icon-bar"></span>
@@ -36,23 +38,23 @@
 
                 <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                   <ul class="nav navbar-nav">
-                    <li><a href="{% url 'qr:home' %}">
+                    <!--<li><a class="li_nav" href="{% url 'qr:home' %}">
                         <i class="fa fa-home" aria-hidden="true"></i> Inicio </a>
-                    </li>
+                    </li>-->
                   </ul>
                   <ul class="nav navbar-nav right-nav">
                     <li id="li-username">
-                        <a href="#">
+                        <a class="li_nav" href="#">
                             <i class="fa fa-user-o" aria-hidden="true"></i> {{ user.username }}
                         </a>
                     </li>
                     {% if user.is_authenticated %}
                         <li>
-                            <a href="{% url 'qr:logout' %}"><i class="fa fa-sign-out" aria-hidden="true"></i> Cerrar sesión</a>
+                            <a class="li_nav" href="{% url 'qr:logout' %}"><i class="fa fa-sign-out" aria-hidden="true"></i> Cerrar sesión</a>
                         </li>
                     {% else %}
                         <li>
-                            <a href="{% url 'qr:login' %}"><i class="fa fa-sign-in" aria-hidden="true"></i> Iniciar sesión</a>
+                            <a class="li_nav" href="{% url 'qr:login' %}"><i class="fa fa-sign-in" aria-hidden="true"></i> Iniciar sesión</a>
                         </li>
                     {% endif %}
                   </ul>

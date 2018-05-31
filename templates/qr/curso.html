@@ -7,19 +7,19 @@
 {% block body %}
     <div class="container">
         <div class="row">
-            <h1>{{ curso.nombre }}</h1>
+            <h1 class="center">{{ curso.nombre }}</h1>
         </div>
         <div class="row">
-            <div class="col-sm-6">
+            <!--<div class="col-sm-6">
                 <p>Información del curso</p>
-            </div>
-            <div class="col-sm-6">
+            </div>-->
+            <div class="col-sm-6 sesiones_list">
                 <div class="row">
-                    <h3>Sesiones activas</h3>
+                    <h3 class="center">Sesiones activas</h3>
                     <div class="notebooks" >
                       <ul class="notebook_ul">
                         {% if not now %}
-                            <h4>No hay sesiones activas en este momento</h4>
+                            <h4 class="center">No hay sesiones activas en este momento</h4>
                         {% endif %}
                           {%  for clase in now %}
                             <li class="li-clase li-active">
@@ -32,12 +32,13 @@
                       </ul>
                     </div>
                 </div>
+
                     <div class="row">
-                        <h3>Sesiones siguientes</h3>
+                        <h3 class="center">Sesiones siguientes</h3>
                         <div class="notebooks" >
                             <ul class="notebook_ul">
                              {% if not next %}
-                            <h4>No hay sesiones proximas</h4>
+                            <h4 class="center">No hay sesiones proximas</h4>
                             {% endif %}
                           {%  for clase in next %}
                             <li class="li-clase li-next">
@@ -49,12 +50,14 @@
                       <!--<span>Número total de sesiones: {{curso.clases.all|length}}</span>-->
                     </div>
                 </div>
+            </div>
+            <div class="col-sm-6 sesiones_list">
                 <div class="row">
-                    <h3>Sesiones pasadas</h3>
+                    <h3 class="center">Sesiones pasadas</h3>
                     <div class="notebooks" >
                         <ul class="notebook_ul">
                          {% if not previous %}
-                            <h4>No hay sesiones pasadas registradas</h4>
+                            <h4 class="center">No hay sesiones pasadas registradas</h4>
                         {% endif %}
                             {%  for clase in previous %}
                                 <li class="li-clase li-previous">
