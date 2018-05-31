@@ -14,13 +14,14 @@
 {% block body %}
     <div class="container" ng-app="Scanner" ng-controller="scan-controller">
         <div class="row center">
-            <h3>{{ curso.nombre }}</h3>
-            <p class="center hora">Inicio: {{ clase.inicio }}  Fin: {{ clase.fin }} </p>
+            <h3><b>{{ curso.nombre }}</b></h3>
+            <p class="center hora"><b>Inicio:</b> {{ clase.inicio }}</p>
+            <p class="center hora"><b>Fin:</b> {{ clase.fin }}</p>
         </div>
         <div clas="row">
             {% if active %}
             <div class="col-sm-4">
-                <p>Por favor haga click en el boton para leer un codigo QR. Tambien puede ingresar el documento en el campo y hacer clic en aceptar</p>
+                <p>Por favor haga click en el boton para leer un codigo QR. Si la persona no cuenta con codigo QR, puede ingresar el documento en el campo y hacer clic en insertar</p>
                 <br>
                 <div class="center">
                     <button class="btn btn-success" ng-click="start()">
@@ -29,6 +30,16 @@
                 </div>
                 <br>
                 <p ng-hide="cameraRequested">El navegador debera pedir permiso para acceder a la camara</p>
+                <br>
+                <div class="row">
+                    <div class="col-xs-8">
+                        <input class=" form-control" type="text" name="fname" placeholder="Documento">
+                    </div>
+                    <input  class="btn col-xs-4 " type="submit" value="Insertar">
+                </div>
+
+                <br>
+
                 <div class="center">
                   <bc-qr-reader class="qr_camera" active="cameraRequested" on-result="processURLfromQR" on-error="onError" camera-status="cameraIsOn"></bc-qr-reader>
                 </div>

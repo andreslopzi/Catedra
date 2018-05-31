@@ -42,10 +42,24 @@ a{
     color: #30333F;
 }
 
+#qr-canvas { display: none; }
+
+.td_curso{
+    width: 100%;
+    padding: 2px 5px 0 5px;
+    margin: 7px .35%;
+    display: inline-flex;
+    box-shadow: 0 2px 4px rgba(0,0,0, .2);
+    margin-top: 5px;
+    background-color: #EEE;
+}
+
 @media (min-width: 768px){
     .right-nav{
         float: right;
     }
+    .nav-title{
+    font-size: 10px ;
+    line-height: 12px;
+    }
 }
-
-#qr-canvas { display: none; }

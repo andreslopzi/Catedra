@@ -6,7 +6,7 @@
     <div class="container">
         <div class="row">
             <div class="col-md-12">
-               <h3 class="center">Cursos cátedra internacional</h3>
+                <h3 class="center"><b>CURSOS CÁTEDRA INTERNACIONAL</b></h3>
 
                 {% if not cursos %}
                     <h3>No tienes cursos disponibles</h3>
@@ -20,7 +20,7 @@
                         <tbody>
                             {%  for curso in cursos %}
                             <tr>
-                                <td><h4><a href="{% url 'qr:curso' curso.id %}">{{ curso.nombre }}</a></h4></td>
+                                <td class="td_curso"><h4><a href="{% url 'qr:curso' curso.id %}">{{ curso.nombre }}</a></h4></td>
                             </tr>
                             {% endfor %}
                         </tbody>
