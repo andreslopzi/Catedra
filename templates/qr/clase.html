@@ -34,9 +34,15 @@
                 <div class="center">
                   <bc-qr-reader class="qr_camera" active="cameraRequested" on-result="processURLfromQR" on-error="onError" camera-status="cameraIsOn"></bc-qr-reader>
                 </div>
-                <p ng-show="url">QR Detectado</p>
-                {% verbatim %}<p><b>{{ url }}</b></p>{% endverbatim %}
-                <h1 ng-bind="mensaje"></h1>
+                <p ng-show="url">QR Detectado: {% verbatim %}<b>{{ url }}</b>{% endverbatim %}</p>
+
+                <div ng-show="bien" class="alert alert-success">
+                  <strong>Exito: </strong> {% verbatim %}{{ mensaje }}{% endverbatim %}
+                </div>
+
+                <div ng-show="mal" class="alert alert-danger">
+                  <strong>Error: </strong> {% verbatim %}{{ mensaje }}{% endverbatim %}
+                </div>
                 <!--<select ng-model="select-camera" ng-options="c as c for c in cameras"></select>-->
                 <p ng-bind="cameras"></p>
                 <br>
