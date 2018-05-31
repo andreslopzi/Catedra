@@ -31,15 +31,6 @@
                 <br>
                 <p ng-hide="cameraRequested">El navegador debera pedir permiso para acceder a la camara</p>
                 <br>
-                <div class="row">
-                    <div class="col-xs-8">
-                        <input class=" form-control" type="text" name="fname" placeholder="Documento">
-                    </div>
-                    <input  class="btn col-xs-4 " type="submit" value="Insertar">
-                </div>
-
-                <br>
-
                 <div class="center">
                   <bc-qr-reader class="qr_camera" active="cameraRequested" on-result="processURLfromQR" on-error="onError" camera-status="cameraIsOn"></bc-qr-reader>
                 </div>
@@ -48,6 +39,13 @@
                 <h1 ng-bind="mensaje"></h1>
                 <!--<select ng-model="select-camera" ng-options="c as c for c in cameras"></select>-->
                 <p ng-bind="cameras"></p>
+                <br>
+                <div class="row">
+                    <div class="col-xs-8">
+                        <input ng-model="identificacion" class="form-control" type="text" name="fname" placeholder="Documento">
+                    </div>
+                    <input  class="btn col-xs-4 " type="submit" value="Insertar" ng-click="asistenciaManual({{ curso.identificador }})">
+                </div>
             </div>
             <div class="col-sm-8">
             {% else %}
