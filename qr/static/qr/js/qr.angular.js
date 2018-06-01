@@ -65,9 +65,10 @@ app.controller("scan-controller", function($scope, $http) {
                          {
                              "documento": $scope.respuesta["asistencia"]["documento"],
                              "nombre": $scope.respuesta["asistencia"]["nombre"],
-                             "hora":  $scope.respuesta["fecha"],
+                             "fecha":  $scope.respuesta["fecha"],
                          }
                          );
+                     $scope.url = $scope.url.split("?",1)
                      $scope.bien = true
                      $scope.mal = false
                      $scope.identificacion = ""
