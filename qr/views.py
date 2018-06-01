@@ -59,7 +59,7 @@ def curso(request, id_curso):
         return redirect('qr:home')
 
     dateNow = datetime.now(tz=timezone.utc)
-    previous = curso.clases.all().filter(fin__lt=dateNow)
+    previous = curso.clases.all().filter(fin__lt=dateNow).order_by('fin').reverse()
     next = curso.clases.all().filter(inicio__gt=dateNow)
     now = curso.clases.all().filter(Q(inicio__lte=dateNow)&Q(fin__gt=dateNow))
 
