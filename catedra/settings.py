@@ -24,6 +24,9 @@ PROJECT_ROOT = os.path.dirname(os.path.abspath(__file__))
 SKEY = os.environ.get('SKEY')
 SECRET_KEY = SKEY
 
+IMPORT_EXPORT_USE_TRANSACTIONS = True
+
+
 # Application definition
 
 INSTALLED_APPS = [
@@ -34,6 +37,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'qr',
+    'import_export',
 ]
 
 MIDDLEWARE = [

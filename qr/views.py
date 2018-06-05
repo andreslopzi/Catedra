@@ -9,7 +9,9 @@ import locale
 
 from .models import *
 from .froms import *
-
+from django.http import HttpResponse
+from .resources import EstudianteResource
+from tablib import Dataset
 # Create your views here.
 def signin(request):
 
@@ -147,3 +149,26 @@ def me(request):
     context["form"] = form
 
     return render(request, 'qr/perfil.html', context)
+
+
+def export(request):
+    estudiante_resource = EstudianteResource()
+    dataset = estudiante_resource.export()
+    response = HttpResponse(dataset.csv, content_type='text/csv')
+    response['Content-Disposition'] = 'attachment; filename="students.csv"'
+    return response
+
+
+def simple_upload(request):
+    if request.method == 'POST':
+        person_resource = EstudianteResource()
+        dataset = Dataset()
+        new_persons = request.FILES['myfile']
+
+        imported_data = dataset.load(new_persons.read())
+        result = person_resource.import_data(dataset, dry_run=True)  # Test the data import
+
+        if not result.has_errors():
+            person_resource.import_data(dataset, dry_run=False)  # Actually import now
+
+    return render(request, 'core/simple_upload.html')
