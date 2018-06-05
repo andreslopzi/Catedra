@@ -8,6 +8,7 @@ from datetime import datetime, timedelta
 import locale
 
 from .models import *
+from .froms import *
 
 # Create your views here.
 def signin(request):
@@ -125,3 +126,24 @@ def clase(request,id_curso, id_clase):
         "asistencias":asistencias
     }
     return render(request, "qr/clase.html", context)
+
+
+def me(request):
+
+    form = UserForm(request.POST or None, prefix='user')
+
+    context = {}
+
+    if form.is_valid():
+        user = request.user
+        username = request.user.username
+        password = form.cleaned_data['password']
+        user.set_password(password)
+        user.save()
+        u = authenticate(username=username, password=password)
+        login(request, u)
+        context["mensaje"] = "Contraseña actualizada con exito"
+
+    context["form"] = form
+
+    return render(request, 'qr/perfil.html', context)
