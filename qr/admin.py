@@ -10,8 +10,15 @@ from .models import *
 class EstudianteAdmin(ImportExportModelAdmin):
     pass
 
+@admin.register(Curso)
+class CursoAdmin(ImportExportModelAdmin):
+    pass
 
-admin.site.register(Clase)
-admin.site.register(Curso)
+@admin.register(Clase)
+class ClaseAdmin(ImportExportModelAdmin):
+    pass
+
+#admin.site.register(Clase)
+#admin.site.register(Curso)
 #admin.site.register(Estudiante)
 admin.site.register(Asistencia)
