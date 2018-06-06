@@ -63,8 +63,8 @@ def curso(request, id_curso):
 
     dateNow = datetime.now(tz=timezone.utc)
     previous = curso.clases.all().filter(fin__lt=dateNow).order_by('fin').reverse()
-    next = curso.clases.all().filter(inicio__gt=dateNow)
-    now = curso.clases.all().filter(Q(inicio__lte=dateNow)&Q(fin__gt=dateNow))
+    next = curso.clases.all().filter(inicio__gt=dateNow+timedelta(minutes=30))
+    now = curso.clases.all().filter(Q(inicio__lte=dateNow+timedelta(minutes=30))&Q(fin__gt=dateNow))
 
     context = {
         "curso" : curso,
@@ -91,7 +91,7 @@ def clase(request,id_curso, id_clase):
 
     #locale.setlocale(locale.LC_ALL, "es_ES.UTF-8")
 
-    currentDate = datetime.now() + timedelta(hours=5)
+    currentDate = datetime.now() #+ timedelta(hours=5)
     formato_local = "%d de %B del %Y a las %I:%M"
     if request.user.is_authenticated():
         if request.method == "POST":

@@ -10,12 +10,10 @@
             <h3 class="center"><b>{{ curso.nombre }}</b></h3>
         </div>
         <div class="row ">
-            <!--<div class="col-sm-6">
-                <p>Información del curso</p>
-            </div>-->
             <div class="col-sm-6 sesiones_list">
                 <div class="row">
                     <h4 class="center">Sesiones activas</h4>
+                    <p>Recuerde que las sesiones estaran activas 30 minutos antes para iniciar la toma de asistencia.</p>
                     <div class="notebooks" >
                       <ul class="notebook_ul">
                         {% if not now %}
@@ -72,6 +70,5 @@
                 </div>
             </div>
         </div>
-
     </div>
 {% endblock %}
