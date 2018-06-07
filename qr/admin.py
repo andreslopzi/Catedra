@@ -18,7 +18,11 @@ class CursoAdmin(ImportExportModelAdmin):
 class ClaseAdmin(ImportExportModelAdmin):
     pass
 
+@admin.register(Asistencia)
+class AsistenciaAdmin(ImportExportModelAdmin):
+    pass
+
 #admin.site.register(Clase)
 #admin.site.register(Curso)
 #admin.site.register(Estudiante)
-admin.site.register(Asistencia)
+#admin.site.register(Asistencia)

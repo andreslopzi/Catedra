@@ -42,4 +42,4 @@ class Asistencia(models.Model):
     fecha = models.DateTimeField(default=datetime.now)
 
     def __str__(self):
-        return self.curso.nombre + " - " + str(self.fecha)
+        return self.clase.curso.nombre + " - " + str(self.fecha)

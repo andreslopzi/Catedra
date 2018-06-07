@@ -12,3 +12,7 @@ class CursoResource(resources.ModelResource):
 class ClaseResource(resources.ModelResource):
     class Meta:
         model = Clase
+
+class AsistenciaResource(resources.ModelResource):
+    class Meta:
+        model = Asistencia
