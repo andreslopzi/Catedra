@@ -167,13 +167,17 @@ def informe(request, id_curso):
     for estudiante in estudiantes:
         toma = []
         toma.append(estudiante.nombre + " - " + estudiante.identificacion)
-        #for clase in clases:
-        #    if estudiante in
-        #reporte[estudiante.identificacion] = toma
+        for clase in clases:
+            if estudiante in get_object_or_404(Asistencia, clase=clase):
+                toma.append("X")
+            else:
+                toma.append("NA")
+
+        reporte[estudiante.identificacion] = toma
 
 
 
-    print(clases)
+    print(reporte)
 
     #context = {
     #    "asistencias"
