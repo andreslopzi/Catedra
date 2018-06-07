@@ -62,9 +62,12 @@ def curso(request, id_curso):
         return redirect('qr:home')
 
     dateNow = datetime.now(tz=timezone.utc)
-    previous = curso.clases.all().filter(fin__lt=dateNow).order_by('fin').reverse()
-    next = curso.clases.all().filter(inicio__gt=dateNow+timedelta(minutes=30))
-    now = curso.clases.all().filter(Q(inicio__lte=dateNow+timedelta(minutes=30))&Q(fin__gt=dateNow))
+    previous = Clase.objects.filter(Q(curso=curso) & Q(fin__lt=dateNow)).order_by('fin').reverse()
+    # previous = curso.clases.all().filter(fin__lt=dateNow).order_by('fin').reverse()
+    next = Clase.objects.filter(Q(curso=curso) & Q(inicio__gt=dateNow+timedelta(minutes=30)))
+    # next = curso.clases.all().filter(inicio__gt=dateNow+timedelta(minutes=30))
+    now =  Clase.objects.filter(Q(curso=curso) & Q(inicio__lte=dateNow+timedelta(minutes=30)) & Q(fin__gt=dateNow))
+    # now = curso.clases.all().filter(Q(inicio__lte=dateNow+timedelta(minutes=30))&Q(fin__gt=dateNow))
 
     context = {
         "curso" : curso,
@@ -74,15 +77,15 @@ def curso(request, id_curso):
     }
     return render(request, "qr/curso.html", context)
 
-def clase(request,id_curso, id_clase):
+def clase(request,id_clase):
 
     if not request.user.is_authenticated():
         return redirect('qr:login')
 
-    curso = get_object_or_404(Curso, pk=id_curso)
     clase = get_object_or_404(Clase, pk=id_clase)
+    curso = get_object_or_404(Curso, pk=clase.curso.id)
     monitor = get_object_or_404(User, pk=request.user.id)
-    asistencias = Asistencia.objects.filter(Q(fecha__gt=clase.inicio-timedelta(minutes=30)) & Q(fecha__lt=clase.fin) & Q(curso=curso))
+    asistencias = clase.asistencia_set.all()
 
     if not monitor in curso.monitores.all():
         return redirect('qr:home')
@@ -97,7 +100,7 @@ def clase(request,id_curso, id_clase):
             estudiante = get_object_or_404(Estudiante, identificacion=qr_text[0])
             response = {}
             print(currentDate.hour,"|",clase.fin.hour,"-",currentDate.minute,"|",clase.fin.minute)
-            if len(Asistencia.objects.filter(Q(fecha__gt=clase.inicio-timedelta(minutes=30)) & Q(fecha__lt=clase.fin) & Q(curso=curso) & Q(estudiante=estudiante)))>0:
+            if estudiante in asistencias:
                 response["status"] = -201
                 response["message"] = "Asistencia rechazada. La persona ya tiene una asistencia creada"
                 print("Asistencia rechazada: la persona tiene asistencia")
@@ -110,7 +113,7 @@ def clase(request,id_curso, id_clase):
                 response["message"] = "El estudiante no tiene el curso registrado"
                 print("El estudiante no tiene el curso registrado")
             elif curso in estudiante.cursos.all() and curso.identificador == int(qr_text[1]) and monitor in curso.monitores.all():
-                asistencia = Asistencia.objects.create(curso=curso, estudiante=estudiante, monitor=monitor, fecha=datetime.now(tz=timezone.utc))
+                asistencia = Asistencia.objects.create(clase=clase, estudiante=estudiante, monitor=monitor, fecha=datetime.now(tz=timezone.utc))
                 response["status"] = 200
                 response["message"] = "Asistencia tomada con exito"
                 response["asistencia"] = {"nombre": asistencia.estudiante.nombre, "documento": asistencia.estudiante.identificacion}
