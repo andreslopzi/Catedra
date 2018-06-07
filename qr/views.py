@@ -5,6 +5,7 @@ from django.core.urlresolvers import reverse
 from django.db.models import Q
 from django.utils import timezone
 from datetime import datetime, timedelta
+import csv
 import locale
 
 from .models import *
@@ -62,7 +63,7 @@ def curso(request, id_curso):
         return redirect('qr:home')
 
     dateNow = datetime.now(tz=timezone.utc)
-    previous = Clase.objects.filter(Q(curso=curso) & Q(fin__lt=dateNow)).order_by('fin').reverse()
+    previous = Clase.objects.filter(Q(curso=curso) & Q(fin__lt=dateNow)).order_by('-fin')
     # previous = curso.clases.all().filter(fin__lt=dateNow).order_by('fin').reverse()
     next = Clase.objects.filter(Q(curso=curso) & Q(inicio__gt=dateNow+timedelta(minutes=30)))
     # next = curso.clases.all().filter(inicio__gt=dateNow+timedelta(minutes=30))
@@ -158,29 +159,37 @@ def me(request):
 
 def informe(request, id_curso):
 
+    response = HttpResponse(content_type='text/csv')
+
+
     curso = get_object_or_404(Curso, pk=id_curso)
     clases = Clase.objects.filter(curso=curso)
     estudiantes = Estudiante.objects.filter(cursos=curso)
+
+    response['Content-Disposition'] = 'attachment; filename="informe-' + curso.nombre + '.csv"'
 
     reporte = {}
 
     for estudiante in estudiantes:
         toma = []
-        toma.append(estudiante.nombre + " - " + estudiante.identificacion)
+
         for clase in clases:
-            if estudiante in get_object_or_404(Asistencia, clase=clase):
+            if Asistencia.objects.filter(Q(clase=clase) & Q(estudiante=estudiante)).exists():
                 toma.append("X")
             else:
                 toma.append("NA")
 
-        reporte[estudiante.identificacion] = toma
+        toma.append(estudiante.nombre + " - " + estudiante.identificacion)
+        reporte[estudiante.identificacion] = toma[::-1]
 
 
+    fechas = clases[::-1]
+    fechas.insert(0, "Estudiantes\\Horarios")
 
-    print(reporte)
+    writer = csv.writer(response)
+    writer.writerow(fechas)
 
-    #context = {
-    #    "asistencias"
-    #}
+    for registro in reporte:
+        writer.writerow(reporte[registro])
 
-    return render(request, "qr/informe.html")
+    return response

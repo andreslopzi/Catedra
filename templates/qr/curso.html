@@ -46,7 +46,6 @@
                             </li>
                           {% endfor %}
                       </ul>
-                      <!--<span>Número total de sesiones: {{curso.clases.all|length}}</span>-->
                     </div>
                 </div>
             </div>
@@ -60,7 +59,7 @@
                         {% endif %}
                             {%  for clase in previous %}
                                 <li class="li-clase li-previous">
-                                 <a href="{% url 'qr:clase' curso.id clase.id %}">
+                                 <a href="{% url 'qr:clase' clase.id %}">
                                   inicio: {{clase.inicio}}<br/>
                                   fin: {{clase.fin}}<br/>
                                  </a>
