@@ -8,21 +8,22 @@ DOCUMENTOS = (
     ("Pasaporte", "Pasaporte")
 )
 
-class Clase(models.Model):
-    inicio = models.DateTimeField(default=datetime.now)
-    fin = models.DateTimeField(default=datetime.now)
-
-    def __str__(self):
-        return "Inicio: " + str(self.inicio) + " - Fin: " + str(self.fin)
 
 class Curso(models.Model):
     identificador = models.IntegerField(default=0000, null=False)
     nombre = models.CharField(max_length=300)
-    clases = models.ManyToManyField(Clase)
     monitores = models.ManyToManyField(User)
 
     def __str__(self):
         return self.nombre
+
+class Clase(models.Model):
+    inicio = models.DateTimeField(default=datetime.now)
+    fin = models.DateTimeField(default=datetime.now)
+    curso = models.ForeignKey(Curso, on_delete=models.CASCADE)
+
+    def __str__(self):
+        return "Inicio: " + str(self.inicio) + " - Fin: " + str(self.fin)
 
 class Estudiante(models.Model):
     identificacion = models.CharField(max_length=20)
@@ -35,8 +36,7 @@ class Estudiante(models.Model):
         return self.identificacion + " - " + self.nombre
 
 class Asistencia(models.Model):
-    clase = models.ForeignKey(Curso, on_delete=models.CASCADE)
-    curso = models.ForeignKey(Curso, on_delete=models.CASCADE)
+    clase = models.ForeignKey(Clase, on_delete=models.CASCADE)
     estudiante = models.ForeignKey(Estudiante, on_delete=models.CASCADE)
     monitor = models.ForeignKey(User, on_delete=models.CASCADE)
     fecha = models.DateTimeField(default=datetime.now)
