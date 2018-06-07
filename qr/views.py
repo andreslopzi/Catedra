@@ -179,7 +179,7 @@ def informe(request, id_curso):
             else:
                 toma.append("NA")
 
-        toma.append(estudiante.nombre + " - " + estudiante.identificacion)
+        toma.append(estudiante.nombre.encode('utf8') + " - " + estudiante.identificacion.encode('utf8'))
         reporte[estudiante.identificacion] = toma[::-1]
 
 
