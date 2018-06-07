@@ -6,6 +6,7 @@ from django.db.models import Q
 from django.utils import timezone
 from datetime import datetime, timedelta
 import csv
+import unidecode
 import locale
 
 from .models import *
@@ -166,7 +167,7 @@ def informe(request, id_curso):
     clases = Clase.objects.filter(curso=curso)
     estudiantes = Estudiante.objects.filter(cursos=curso)
 
-    response['Content-Disposition'] = 'attachment; filename="informe-' + curso.nombre + '.csv"'
+    response['Content-Disposition'] = 'attachment; filename="informe-' + unidecode.unidecode(curso.nombre) + '.csv"'
 
     reporte = {}
 
@@ -179,7 +180,7 @@ def informe(request, id_curso):
             else:
                 toma.append("NA")
 
-        toma.append(estudiante.nombre.encode('utf8') + " - ".encode('utf8') + estudiante.identificacion.encode('utf8'))
+        toma.append(estudiante.nombre + " - " + estudiante.identificacion)
         reporte[estudiante.identificacion] = toma[::-1]
 
 
