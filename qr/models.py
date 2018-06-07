@@ -35,6 +35,7 @@ class Estudiante(models.Model):
         return self.identificacion + " - " + self.nombre
 
 class Asistencia(models.Model):
+    clase = models.ForeignKey(Curso, on_delete=models.CASCADE)
     curso = models.ForeignKey(Curso, on_delete=models.CASCADE)
     estudiante = models.ForeignKey(Estudiante, on_delete=models.CASCADE)
     monitor = models.ForeignKey(User, on_delete=models.CASCADE)

@@ -8,6 +8,7 @@
     <div class="container">
         <div class="row">
             <h3 class="center"><b>{{ curso.nombre }}</b></h3>
+            <h6 style="text-align: center; cursor: pointer;"><a href="{% url 'qr:informe' curso.id %}"><small>Informe de asistencias <i class="fa fa-file-text-o"></i></small></a></h6>
         </div>
         <div class="row ">
             <div class="col-sm-6 sesiones_list">

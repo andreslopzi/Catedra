@@ -149,3 +149,29 @@ def me(request):
     context["form"] = form
 
     return render(request, 'qr/perfil.html', context)
+
+
+def informe(request, id_curso):
+
+    curso = get_object_or_404(Curso, pk=id_curso)
+    clases = Clase.objects.filter(curso=curso)
+    estudiantes = Estudiante.objects.filter(cursos=curso)
+
+    reporte = {}
+
+    for estudiante in estudiantes:
+        toma = []
+        toma.append(estudiante.nombre + " - " + estudiante.identificacion)
+        #for clase in clases:
+        #    if estudiante in
+        #reporte[estudiante.identificacion] = toma
+
+
+
+    print(clases)
+
+    #context = {
+    #    "asistencias"
+    #}
+
+    return render(request, "qr/informe.html")
