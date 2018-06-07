@@ -26,6 +26,7 @@ app.controller("scan-controller", function($scope, $http) {
                      if (response.status == 200) {
                          $scope.respuesta = response.data;
                          $scope.mensaje = $scope.respuesta["message"]
+                         $scope.url = $scope.url.split("?",1)
                          if($scope.respuesta["status"] == 200){
                              $scope.nuevas_asistencias.push(
                                  {
@@ -34,14 +35,14 @@ app.controller("scan-controller", function($scope, $http) {
                                      "fecha": $scope.respuesta["fecha"]
                                  }
                                  );
-                             $scope.url = $scope.url.split("?",1)
                              $scope.mal = false
                              $scope.bien = true
                          }
                      }
                  }, function(response){
                       $scope.mal = true
-                      $scope.mensaje = "No existe un registro con esa identificación en este grupo"
+                      $scope.url = $scope.url.split("?",1)
+                      $scope.mensaje = "No existe un registro con esa identificación en el sistema. Por favor comuniquese con el encargado si se trata de un error."
                  });
         }
   }
@@ -52,13 +53,14 @@ app.controller("scan-controller", function($scope, $http) {
     $scope.bien = false;
     $scope.mal = false;
 
-    var url = $scope.identificacion+"?"+id_curso
-    $http.post("", url)
+    $scope.url = $scope.identificacion+"?"+id_curso
+    $http.post("", $scope.url)
          .then(function (response) {
              $scope.mal = true
              if (response.status == 200) {
                  $scope.respuesta = response.data;
                  $scope.mensaje = $scope.respuesta["message"]
+                 $scope.url = $scope.url.split("?",1)
                  if($scope.respuesta["status"] == 200){
                      $scope.nuevas_asistencias.push(
                          {
@@ -74,7 +76,8 @@ app.controller("scan-controller", function($scope, $http) {
              }
          }, function(response){
               $scope.mal = true
-              $scope.mensaje = "No existe un registro con esa identificación en este grupo"
+              $scope.url = $scope.url.split("?",1)
+              $scope.mensaje = "No existe un registro con esa identificación en el sistema. Por favor comuniquese con el encargado si se trata de un error."
          });
 
   }
