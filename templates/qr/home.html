@@ -6,12 +6,11 @@
     <div class="container">
         <div class="row">
             <div class="col-md-12">
-                <h3 class="center"><b>CURSOS CÁTEDRA INTERNACIONAL</b></h3>
                 {% if monitor %}
                     {% if not cursos_monitor %}
                         <h3>No tienes cursos asociados a su cuenta como monitor</h3>
-                    {% eslse %}
-                        <h3>CURSOS A CARGO</h3>
+                    {% else %}
+                        <h3 class="center"><b>CURSOS A CARGO</b></h3>
                         <table align="center">
                             <thead>
                                 <!--<tr>
@@ -32,8 +31,8 @@
                     {% if not monitor %}
                         <h3>No tienes cursos asociados a su cuenta como estudiante</h3>
                     {% endif %}
-                {% eslse %}
-                    <h3>CURSOS INSCRITOS</h3>
+                {% else %}
+                    <h3 class="center"><b>CURSOS INSCRITOS</b></h3>
                     <table align="center">
                         <thead>
                             <!--<tr>
@@ -41,7 +40,7 @@
                             </tr>-->
                         </thead>
                         <tbody>
-                            {%  for curso in cursos_monitor %}
+                            {%  for curso in cursos_estudiante %}
                             <tr>
                                 <td class="td_curso"><h4><a href="{% url 'qr:curso' curso.id %}">{{ curso.nombre }}</a></h4></td>
                             </tr>

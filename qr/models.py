@@ -29,8 +29,8 @@ class Estudiante(models.Model):
     identificacion = models.CharField(max_length=20)
     tipo_documento = models.CharField(max_length=30, choices=DOCUMENTOS)
     nombre = models.CharField(max_length=200)
-    correo = models.CharField(max_length=100)
-    cursos = models.ManyToManyField(Curso)
+    correo = models.CharField(max_length=100, unique=True)
+    cursos = models.ManyToManyField(Curso, blank=True)
     usuario = models.OneToOneField(User, on_delete=models.CASCADE, null=True)
     monitor = models.BooleanField(default=False)
 

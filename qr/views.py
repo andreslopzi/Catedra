@@ -56,6 +56,9 @@ def register(request):
         elif not Estudiante.objects.filter(correo=email).exists():
             form.add_error("email", "El correo no se encuentra en nuestra base de datos")
         else:
+            x = Estudiante.objects.filter(correo=email)
+            print(x)
+
             estudiante = get_object_or_404(Estudiante, correo=email)
             user = form.save(commit=False)
             username = form.cleaned_data['username']
@@ -84,7 +87,7 @@ def home(request):
     context = {
         "cursos_monitor": Curso.objects.filter(monitores=request.user),
         "monitor": request.user.estudiante.monitor,
-        "cursos_estudiante":equest.user.estudiante.cursos
+        "cursos_estudiante":request.user.estudiante.cursos.all()
     }
 
     return render(request, "qr/home.html", context)
@@ -171,7 +174,6 @@ def clase(request,id_clase):
         "asistencias":asistencias
     }
     return render(request, "qr/clase.html", context)
-
 
 def me(request):
 
