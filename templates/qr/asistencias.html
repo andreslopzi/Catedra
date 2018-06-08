@@ -1,0 +1,80 @@
+{% extends 'qr/base.html' %}
+{% load staticfiles %}
+{% block title %}{{ curso.nombre }}{% endblock %}
+{% block head %}
+    <link rel="stylesheet" href="{% static "qr/css/curso.css" %}">
+{% endblock %}
+{% block body %}
+    <div class="container">
+        <div class="row">
+            <h3 class="center"><b>{{ curso.nombre }}</b></h3>
+        </div>
+        <div class="row ">
+            <div class="col-sm-6 sesiones_list">
+                <div class="row">
+                    <h4 class="center">Sesiones activas</h4>
+                    <p>Recuerde que las sesiones estaran activas 30 minutos antes para iniciar la toma de asistencia.</p>
+                    <div class="notebooks" >
+                      <ul class="notebook_ul">
+                        {% if not now %}
+                            <h4 class="center">No hay sesiones activas en este momento</h4>
+                        {% endif %}
+                          {%  for clase in now %}
+                            <li class="li-clase li-active">
+                                <a href="{% url 'qr:clase' clase.id%}">
+                                    {{ clase.id }}
+                                  inicio: {{clase.inicio}}<br/>
+                                  fin: {{clase.fin}}<br/>
+                                </a>
+                            </li>
+                              {%  for clase in asistencias %}
+                                  <p>{{ clase.id }} </p>
+                              {% endfor %}
+                          {% endfor %}
+                      </ul>
+                    </div>
+                </div>
+
+                    <div class="row">
+                        <h4 class="center">Sesiones siguientes</h4>
+                        <div class="notebooks" >
+                            <ul class="notebook_ul">
+                             {% if not next %}
+                            <h4 class="center">No hay sesiones proximas</h4>
+                            {% endif %}
+                          {%  for clase in next %}
+                            <li class="li-clase li-next">
+                              inicio: {{clase.inicio}}<br/>
+                              fin: {{clase.fin}}<br/>
+                            </li>
+                              {% if clase in clases %}
+                                  <p>si esta </p>
+                              {% endif %}
+                          {% endfor %}
+                      </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-6 sesiones_list">
+                <div class="row">
+                    <h4 class="center">Sesiones pasadas</h4>
+                    <div class="notebooks" >
+                        <ul class="notebook_ul">
+                         {% if not previous %}
+                            <h4 class="center">No hay sesiones pasadas registradas</h4>
+                        {% endif %}
+                            {%  for clase in previous %}
+                                <li class="li-clase li-previous">
+                                 <a href="{% url 'qr:clase' clase.id %}">
+                                  inicio: {{clase.inicio}}<br/>
+                                  fin: {{clase.fin}}<br/>
+                                 </a>
+                                </li>
+                            {% endfor %}
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

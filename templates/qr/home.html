@@ -42,7 +42,7 @@
                         <tbody>
                             {%  for curso in cursos_estudiante %}
                             <tr>
-                                <td class="td_curso"><h4><a href="{% url 'qr:curso' curso.id %}">{{ curso.nombre }}</a></h4></td>
+                                <td class="td_curso"><h4><a href="{% url 'qr:asistencias' curso.id %}">{{ curso.nombre }}</a></h4></td>
                             </tr>
                             {% endfor %}
                         </tbody>

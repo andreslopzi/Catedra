@@ -175,6 +175,28 @@ def clase(request,id_clase):
     }
     return render(request, "qr/clase.html", context)
 
+def asistencias(request, id_curso):
+    if not request.user.is_authenticated():
+        return redirect('qr:login')
+
+    estudiante = request.user.estudiante
+    curso = get_object_or_404(Curso, pk=id_curso)
+
+    dateNow = datetime.now(tz=timezone.utc)
+    previous = Clase.objects.filter(Q(curso=curso) & Q(fin__lt=dateNow)).order_by('-fin')
+    next = Clase.objects.filter(Q(curso=curso) & Q(inicio__gt=dateNow + timedelta(minutes=30)))
+    now = Clase.objects.filter(Q(curso=curso) & Q(inicio__lte=dateNow + timedelta(minutes=30)) & Q(fin__gt=dateNow))
+    asistencias = Asistencia.objects.filter(Q(estudiante=estudiante))
+    context = {
+        "curso": curso,
+        "previous": previous,
+        "next": next,
+        "asistencias":asistencias,
+        "now": now
+    }
+    return render(request, "qr/asistencias.html", context)
+
+
 def me(request):
 
     form = UserForm(request.POST or None, prefix='user')

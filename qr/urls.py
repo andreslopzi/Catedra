@@ -12,4 +12,5 @@ urlpatterns = [
     url(r"^curso/(?P<id_curso>[0-9]+)/$", views.curso, name="curso"),
     url(r"^informe/(?P<id_curso>[0-9]+)$", views.informe, name="informe"),
     url(r"^clase/(?P<id_clase>[0-9]+)/$", views.clase, name="clase"),
+    url(r"^asistencias/(?P<id_curso>[0-9]+)/$", views.asistencias, name="asistencias"),
 ]
