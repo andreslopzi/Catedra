@@ -48,7 +48,9 @@ def home(request):
         return redirect('qr:login')
 
     context = {
-        "cursos": Curso.objects.filter(monitores=request.user),
+        "cursos_monitor": Curso.objects.filter(monitores=request.user),
+        "monitor": request.user.estudiante.monitor,
+        "cursos_estudiante":equest.user.estudiante.cursos
     }
 
     return render(request, "qr/home.html", context)

@@ -7,10 +7,33 @@
         <div class="row">
             <div class="col-md-12">
                 <h3 class="center"><b>CURSOS CÁTEDRA INTERNACIONAL</b></h3>
-
-                {% if not cursos %}
-                    <h3>No tienes cursos disponibles</h3>
-                {% else %}
+                {% if monitor %}
+                    {% if not cursos_monitor %}
+                        <h3>No tienes cursos asociados a su cuenta como monitor</h3>
+                    {% eslse %}
+                        <h3>CURSOS A CARGO</h3>
+                        <table align="center">
+                            <thead>
+                                <!--<tr>
+                                    <th>Nombre</th>
+                                </tr>-->
+                            </thead>
+                            <tbody>
+                                {%  for curso in cursos_monitor %}
+                                <tr>
+                                    <td class="td_curso"><h4><a href="{% url 'qr:curso' curso.id %}">{{ curso.nombre }}</a></h4></td>
+                                </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    {% endif %}
+                {% endif %}
+                {% if not cursos_estudiante%}
+                    {% if not monitor %}
+                        <h3>No tienes cursos asociados a su cuenta como estudiante</h3>
+                    {% endif %}
+                {% eslse %}
+                    <h3>CURSOS INSCRITOS</h3>
                     <table align="center">
                         <thead>
                             <!--<tr>
@@ -18,7 +41,7 @@
                             </tr>-->
                         </thead>
                         <tbody>
-                            {%  for curso in cursos %}
+                            {%  for curso in cursos_monitor %}
                             <tr>
                                 <td class="td_curso"><h4><a href="{% url 'qr:curso' curso.id %}">{{ curso.nombre }}</a></h4></td>
                             </tr>
