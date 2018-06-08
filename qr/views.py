@@ -42,6 +42,40 @@ def signout(request):
     logout(request)
     return HttpResponseRedirect(reverse('qr:login'))
 
+def register(request):
+
+    if request.user.is_authenticated():
+        return redirect('qr:home')
+
+    form = CreateUserForm(request.POST or None, prefix='user_form')
+
+    if form.is_valid():
+        email = form.cleaned_data['email']
+        if User.objects.filter(email=email).exists():
+            form.add_error("email", "Ya existe usuario con ese correo")
+        elif not Estudiante.objects.filter(correo=email).exists():
+            form.add_error("email", "El correo no se encuentra en nuestra base de datos")
+        else:
+            estudiante = get_object_or_404(Estudiante, correo=email)
+            user = form.save(commit=False)
+            username = form.cleaned_data['username']
+            password = form.cleaned_data['password']
+            user.set_password(password)
+            user.save()
+            estudiante.usuario = user
+            estudiante.save()
+
+            user = authenticate(username=username, password=password)
+            if user is not None:
+                if user.is_active:
+                    login(request, user)
+                    return redirect('qr:home')
+    context = {
+        "form": form,
+    }
+
+    return render(request, 'qr/register.html', context)
+
 def home(request):
 
     if not request.user.is_authenticated():
