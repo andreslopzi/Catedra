@@ -31,6 +31,8 @@ class Estudiante(models.Model):
     nombre = models.CharField(max_length=200)
     correo = models.CharField(max_length=100)
     cursos = models.ManyToManyField(Curso)
+    usuario = models.OneToOneField(User, on_delete=models.CASCADE, null=True)
+    monitor = models.BooleanField(default=False)
 
     def __str__(self):
         return self.identificacion + " - " + self.nombre
