@@ -24,7 +24,7 @@ class Clase(models.Model):
     curso = models.ForeignKey(Curso, on_delete=models.CASCADE)
 
     def __str__(self):
-        return "Inicio: " + str(self.inicio.astimezone(pytz.timezone('America/Bogota'))) + " - Fin: " + str(self.fin.astimezone(pytz.timezone('America/Bogota')))
+        return "Inicio: " + str(self.inicio.astimezone(pytz.timezone('America/Bogota')).strftime("%Y-%m-%d %H:%M:%S")) + " - Fin: " + str(self.fin.astimezone(pytz.timezone('America/Bogota')).strftime("%Y-%m-%d %H:%M:%S"))
 
 class Estudiante(models.Model):
     identificacion = models.CharField(max_length=20)
