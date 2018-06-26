@@ -27,7 +27,7 @@ class Clase(models.Model):
         return "Inicio: " + str(self.inicio.astimezone(pytz.timezone('America/Bogota')).strftime("%Y-%m-%d %H:%M:%S")) + " - Fin: " + str(self.fin.astimezone(pytz.timezone('America/Bogota')).strftime("%Y-%m-%d %H:%M:%S"))
 
 class Estudiante(models.Model):
-    identificacion = models.CharField(max_length=20)
+    identificacion = models.CharField(max_length=20, unique=True)
     tipo_documento = models.CharField(max_length=30, choices=DOCUMENTOS)
     nombre = models.CharField(max_length=200)
     correo = models.CharField(max_length=100, unique=True)
