@@ -32,7 +32,7 @@ class Estudiante(models.Model):
     nombre = models.CharField(max_length=200)
     correo = models.CharField(max_length=100, unique=True)
     cursos = models.ManyToManyField(Curso, blank=True)
-    usuario = models.OneToOneField(User, on_delete=models.CASCADE, null=True)
+    usuario = models.OneToOneField(User, on_delete=models.CASCADE, null=True, blank=True)
     monitor = models.BooleanField(default=False)
 
     def __str__(self):
