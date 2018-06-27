@@ -138,10 +138,13 @@ def clase(request,id_clase):
     if request.user.is_authenticated():
         if request.method == "POST":
             qr_text = request.body.decode("utf-8").split("?")
+            print("QR Text: " + str(qr_text))
             estudiante = get_object_or_404(Estudiante, identificacion=qr_text[0])
+            #print(estudiante)
             response = {}
             print(currentDate.hour,"|",clase.fin.hour,"-",currentDate.minute,"|",clase.fin.minute)
-            if estudiante in asistencias:
+            print(asistencias)
+            if asistencias.filter(estudiante=estudiante).exists():
                 response["status"] = -201
                 response["message"] = "Asistencia rechazada. La persona ya tiene una asistencia creada"
                 print("Asistencia rechazada: la persona tiene asistencia")

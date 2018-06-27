@@ -20,6 +20,7 @@ app.controller("scan-controller", function($scope, $http) {
             $http.defaults.xsrfCookieName = 'csrftoken';
             $http.defaults.xsrfHeaderName = 'X-CSRFToken';
             $scope.CurrentDate = new Date();
+            //alert($scope.url);
             $http.post("", $scope.url)
                  .then(function (response) {
                      $scope.mal = true
@@ -54,6 +55,7 @@ app.controller("scan-controller", function($scope, $http) {
     $scope.mal = false;
 
     $scope.url = $scope.identificacion+"?"+id_curso
+    //alert($scope.url);
     $http.post("", $scope.url)
          .then(function (response) {
              $scope.mal = true
