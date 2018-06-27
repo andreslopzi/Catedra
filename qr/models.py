@@ -45,4 +45,4 @@ class Asistencia(models.Model):
     fecha = models.DateTimeField(default=datetime.now)
 
     def __str__(self):
-        return self.estudiante + " - " + self.clase.curso.nombre + " - " + str(self.fecha.astimezone(pytz.timezone('America/Bogota')).strftime("%Y-%m-%d %H:%M:%S"))
+        return self.estudiante.nombre + " - " + self.clase.curso.nombre + " - " + str(self.fecha.astimezone(pytz.timezone('America/Bogota')).strftime("%Y-%m-%d %H:%M:%S"))
