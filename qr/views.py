@@ -148,10 +148,10 @@ def clase(request,id_clase):
                 response["status"] = -201
                 response["message"] = "Asistencia rechazada. La persona ya tiene una asistencia creada"
                 print("Asistencia rechazada: la persona tiene asistencia")
-            elif currentDate.hour>=clase.fin.hour and currentDate.minute>clase.fin.minute:
-                response["status"] = -202
-                response["message"] = "Tiempo finalizado. Ya no se puede registrar"
-                print("El tiempo ha finalizado. Ya no se puede registrar")
+            #elif currentDate.hour>=clase.fin.hour and currentDate.minute>clase.fin.minute:
+                #response["status"] = -202
+                #response["message"] = "Tiempo finalizado. Ya no se puede registrar"
+                #print("El tiempo ha finalizado. Ya no se puede registrar")
             elif not curso in estudiante.cursos.all() :
                 response["status"] = -203
                 response["message"] = "El estudiante no tiene el curso registrado"
