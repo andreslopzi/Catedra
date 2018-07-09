@@ -227,7 +227,7 @@ def informe(request, id_curso):
 
 
     curso = get_object_or_404(Curso, pk=id_curso)
-    clases = Clase.objects.filter(curso=curso)
+    clases = Clase.objects.filter(curso=curso).order_by("inicio")
     estudiantes = Estudiante.objects.filter(cursos=curso)
 
     response['Content-Disposition'] = 'attachment; filename="informe-' + unidecode.unidecode(curso.nombre) + '.csv"'
@@ -243,11 +243,11 @@ def informe(request, id_curso):
             else:
                 toma.append("NA")
 
-        toma.append(estudiante.nombre + " - " + estudiante.identificacion)
-        reporte[estudiante.identificacion] = toma[::-1]
+        toma.insert( 0,estudiante.nombre + " - " + estudiante.identificacion)
+        reporte[estudiante.identificacion] = list(toma)
 
 
-    fechas = clases[::-1]
+    fechas = list(clases)
     fechas.insert(0, "Estudiantes\\Horarios")
 
     writer = csv.writer(response)
